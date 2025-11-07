@@ -4,7 +4,6 @@ dist
 .DS_Store
 .git
 .gitignore
-pnpm-lock.yaml
 .next
 coverage
 docker-compose.override.yml

@@ -4,6 +4,6 @@ node_modules
 .DS_Store
 .git
 .gitignore
-pnpm-lock.yaml
 dist
 coverage
+# pnpm-lock.yaml removed from ignore so it can be included in Docker build context

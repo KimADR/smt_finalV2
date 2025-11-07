@@ -6,7 +6,14 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
+  output: 'standalone',  // Enable standalone output mode
+  experimental: {
+    outputFileTracingRoot: undefined, // Needed for standalone in Docker
+  },
   images: {
+    // If installing `sharp` in the runner fails on Alpine, consider
+    // setting `unoptimized: true` to disable Next.js image optimization.
+    // unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
