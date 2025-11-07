@@ -1,0 +1,122 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int         @id @default(autoincrement())
+  username     String      @unique
+  email        String      @unique
+  password     String
+  fullName     String?
+  phone        String?
+  avatar       String?
+  role         Role        @default(ENTREPRISE)
+  entreprise   Entreprise? @relation(fields: [entrepriseId], references: [id])
+  entrepriseId Int?
+  taxId        String?
+  isActive     Boolean     @default(true)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  mouvements   Mouvement[] @relation("UserMouvements")
+  notifications Notification[]
+}
+
+model Entreprise {
+  id            Int               @id @default(autoincrement())
+  name          String
+  sector        String?
+  siret         String?           @unique
+  address       String?
+  contactEmail  String?
+  phone         String?
+  status        EnterpriseStatus  @default(ACTIF)
+  taxType       TaxType           @default(IR)
+  legalForm     String?
+  activity      String?
+  annualRevenue Float?
+  city          String?
+  postalCode    String?
+  description   String?
+  users         User[]
+  mouvements    Mouvement[]
+  alerts        Alert[]
+  createdAt     DateTime          @default(now())
+}
+
+enum EnterpriseStatus {
+  ACTIF
+  INACTIF
+  SUSPENDU
+}
+
+enum TaxType {
+  IR
+  IS
+}
+
+model Mouvement {
+  id           Int           @id @default(autoincrement())
+  entreprise   Entreprise    @relation(fields: [entrepriseId], references: [id])
+  entrepriseId Int
+  user         User?         @relation("UserMouvements", fields: [userId], references: [id])
+  userId       Int?
+  amount       Decimal        @db.Decimal(15,2)
+  type         MouvementType
+  description  String?
+  reference    String?
+  estPaiementImpot Boolean @default(false)
+  attachments  Json?
+  createdAt    DateTime       @default(now())
+  alerts       Alert[]
+}
+
+model Alert {
+  id           Int       @id @default(autoincrement())
+  type         String
+  level        String    @default("simple") // simple | warning | urgent
+  status       String    @default("open")   // open | resolved | dismissed
+  entrepriseId Int
+  mouvementId  Int?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  resolvedAt   DateTime?
+  notifiedAt   DateTime?
+  notes        String?
+
+  entreprise   Entreprise @relation(fields: [entrepriseId], references: [id])
+  mouvement    Mouvement? @relation(fields: [mouvementId], references: [id])
+  notifications Notification[]
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  alertId   Int?
+  payload   Json
+  read      Boolean  @default(false)
+  deleted   Boolean  @default(false)
+  deletedAt DateTime?
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id])
+  alert     Alert?   @relation(fields: [alertId], references: [id])
+}
+
+enum Role {
+  ADMIN_FISCAL
+  ENTREPRISE
+  AGENT_FISCAL
+}
+
+
+
+enum MouvementType {
+  CREDIT
+  DEBIT
+  TAXPAIMENT
+}
