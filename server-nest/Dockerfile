@@ -1,32 +1,36 @@
-FROM node:18-alpine AS base
 
-# Install dependencies only when needed
-FROM base AS deps
-RUN apk add --no-cache libc6-compat
+# Builder stage: install deps and build
+FROM node:18-alpine AS builder
 WORKDIR /app
 
-# Install dependencies based on the preferred package manager
-COPY package.json pnpm-lock.yaml ./
+# Install pnpm
 RUN npm install -g pnpm
+
+# Copy only lockfile and package manifest and install
+COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
-# Build the app
-FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+# Copy source and build
 COPY . .
-
-RUN npm install -g pnpm
 RUN pnpm build
+RUN pnpm prisma generate || true
 
-# Production image, copy all the files and run nest
-FROM base AS runner
+# Runner stage: smaller production image
+FROM node:18-alpine AS runner
 WORKDIR /app
 
-ENV NODE_ENV production
+ENV NODE_ENV=production
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nestjs
+# Create a non-root user
+RUN addgroup --system --gid 1001 nodejs && \
+	adduser --system --uid 1001 --ingroup nodejs nestjs || true
+
+# Copy built artifacts and node_modules
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
+
+USER nestjs
 
 # Copy only necessary files
 COPY --from=builder /app/dist ./dist
