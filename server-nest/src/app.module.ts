@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from './prisma.service';
-import { ScheduleModule } from '@nestjs/schedule';
 import { AlertsModule } from './alerts/alerts.module';
 import { DebugNotificationsController } from './notifications/debug.controller';
 
@@ -27,7 +26,6 @@ const devControllers =
     AnalyticsModule,
     ReportsModule,
     AuthModule,
-    ScheduleModule.forRoot(),
     AlertsModule,
   ],
   controllers: [...devControllers],

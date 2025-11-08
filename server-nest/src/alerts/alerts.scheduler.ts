@@ -1,20 +1,26 @@
-import { Injectable } from '@nestjs/common';
-import { Cron } from '@nestjs/schedule';
+import { Injectable, OnModuleInit } from '@nestjs/common';
+import * as cron from 'node-cron';
 import { PrismaService } from '../prisma.service';
 import { AlertsService } from './alerts.service';
 import { NotificationsGateway } from '../notifications/notifications.gateway';
 
 @Injectable()
-export class AlertsScheduler {
+export class AlertsScheduler implements OnModuleInit {
   constructor(
     private prisma: PrismaService,
     private alerts: AlertsService,
     private gateway: NotificationsGateway,
   ) {}
 
-  // daily at 02:00
-  @Cron('0 0 2 * * *')
-  async checkAndPromoteAlerts() {
+  onModuleInit() {
+    // Schedule the task to run daily at 02:00
+    cron.schedule('0 0 2 * * *', () => {
+      this.checkAndPromoteAlerts();
+    });
+
+  }
+
+  private async checkAndPromoteAlerts() {
     const now = new Date();
     const warnDate = new Date(now);
     warnDate.setDate(warnDate.getDate() - 14);
