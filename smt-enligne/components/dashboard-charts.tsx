@@ -30,7 +30,7 @@ const emptyArray: any[] = []
 
 export function DashboardCharts({ period, selectedEnterprise }: { period: string; selectedEnterprise?: string }) {
   const { theme } = useTheme();
-  const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000'
+  const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3333'
   const [revenueExpenseData, setRevenueExpenseData] = useState<any[]>(emptyArray)
   const [sectorData, setSectorData] = useState<any[]>(emptyArray)
   const [netBalanceData, setNetBalanceData] = useState<any[]>(emptyArray)

@@ -134,7 +134,7 @@ export function useNotifications() {
       // helper to attempt socket connection with given options
       let triedPolling = false
       const connectWithOptions = (opts: any) => {
-        const socket = io((process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000') + '/notifications', {
+        const socket = io((process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333') + '/notifications', {
           auth: { token: `Bearer ${authToken}` },
           autoConnect: true,
           ...opts,
@@ -167,7 +167,7 @@ export function useNotifications() {
       }
 
   // determine socket base: prefer NEXT_PUBLIC_API_BASE then NEXT_PUBLIC_API_URL then fallback
-  const baseUrl = (process?.env?.NEXT_PUBLIC_API_BASE as string) || (process?.env?.NEXT_PUBLIC_API_URL as string) || 'http://localhost:4000'
+    const baseUrl = (process?.env?.NEXT_PUBLIC_API_URL as string) || 'http://localhost:3333'
   // initial attempt: allow default transports (prefer websocket)
   connectWithOptions({ path: new URL('/notifications', baseUrl).pathname ? undefined : undefined })
 

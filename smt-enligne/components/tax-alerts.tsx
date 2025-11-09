@@ -82,7 +82,7 @@ export function TaxAlerts({ period, selectedEnterprise }: { period: string; sele
   }, [alerts.length, totalPages])
 
   useEffect(() => {
-    const api = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:4000"
+    const api = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333"
     setLoading(true)
     // fetch alerts from the new backend alerts endpoint
     const params = new URLSearchParams({ period })

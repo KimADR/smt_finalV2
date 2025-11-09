@@ -28,10 +28,14 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
-# Install OpenSSL for Prisma
+# Install OpenSSL and postgresql-client for Prisma and health checks
 RUN apt-get update && \
-    apt-get install -y openssl && \
+    apt-get install -y openssl postgresql-client && \
     rm -rf /var/lib/apt/lists/*
+
+# Add wait-for script
+COPY wait-for-db.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/wait-for-db.sh
 
 # Create a non-root user
 RUN addgroup --system --gid 1001 nodejs && \

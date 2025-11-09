@@ -17,7 +17,7 @@ export function authFetch(input: RequestInfo, init: RequestInit = {}) {
       headers.set('Content-Type', headers.get('Content-Type') || 'application/json')
     }
     // Prefix API base URL if calling backend route starting with /api/
-    const base = (typeof process !== 'undefined' && (process as any)?.env?.NEXT_PUBLIC_API_BASE) || 'http://localhost:4000'
+    const base = (typeof process !== 'undefined' && (process as any)?.env?.NEXT_PUBLIC_API_URL) || 'http://localhost:3333'
     let url = String(input)
     if (url.startsWith('/api/')) {
       url = base.replace(/\/$/, '') + url

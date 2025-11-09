@@ -15,7 +15,7 @@ import NotificationBell from '@/components/notification-bell'
 
 // ...existing imports
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000"
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3333"
 
 type MovementType = 'RECETTE' | 'DEPENSE' | 'TAXPAIMENT' | string
 type ReportRow = {

@@ -90,7 +90,7 @@ export function MovementForm({ open, onOpenChange, enterpriseId, enterpriseName,
 
   useEffect(() => {
     if (!open) return
-    const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000"
+    const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3333"
     authFetch(`${API_URL}/api/entreprises` as any)
       .then((r) => (r.ok ? r.json() : []))
       .then((list: any[]) => {
@@ -138,7 +138,7 @@ export function MovementForm({ open, onOpenChange, enterpriseId, enterpriseName,
       entreprise_id: entrepriseIdPayload,
     }
 
-    const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000"
+    const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3333"
 
     // decide if this is an edit or create
     const isEdit = !!(initialData && (initialData.id || initialData._id))

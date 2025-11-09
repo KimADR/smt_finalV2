@@ -40,7 +40,7 @@ export function AnalyticsDashboard() {
   const [sectorPerformance, setSectorPerformance] = useState<Array<any>>([])
   const [taxComplianceData, setTaxComplianceData] = useState<Array<any>>([])
   const [cashFlowData, setCashFlowData] = useState<Array<any>>([])
-  const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000"
+    const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3333"
 
   useEffect(() => {
     let mounted = true

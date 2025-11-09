@@ -22,7 +22,7 @@ import { authFetch } from "@/lib/utils"
 import { showErrorToast } from '@/hooks/use-toast'
 
 // API base URL: can be overridden at build/runtime via NEXT_PUBLIC_API_URL
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000"
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3333"
 
 // Data will be fetched from backend API
 

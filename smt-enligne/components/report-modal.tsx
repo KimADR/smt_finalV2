@@ -47,7 +47,7 @@ export default function ReportModal({ open, onOpenChange, enterprise, calculatio
     if (!generated) return
     // fetch mouvements and filter by enterprise and period
     setLoading(true)
-    const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000'
+    const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3333'
     authFetch(`${API_URL}/api/mouvements` as any)
       .then((r) => (r.ok ? r.json() : []))
       .then((list: any[]) => {
@@ -92,7 +92,7 @@ export default function ReportModal({ open, onOpenChange, enterprise, calculatio
 
   const downloadReport = async () => {
     try {
-      const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000'
+      const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3333'
       const monthIndex = months.indexOf(month)
       const from = new Date(Number(year), monthIndex, 1)
       const to = new Date(Number(year), monthIndex + 1, 0)

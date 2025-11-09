@@ -36,7 +36,7 @@ function AnimatedCounter({ value }: { value: number }) {
   return <span>{new Intl.NumberFormat('fr-FR').format(v)}</span>
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000'
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3333'
 
 export default function EnterpriseDetailPage() {
   const params = useParams()

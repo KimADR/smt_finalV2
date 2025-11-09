@@ -30,7 +30,7 @@ import { toast } from "@/hooks/use-toast"
 import { ThemeToggle } from '@/components/theme-toggle'
 import NotificationBell from '@/components/notification-bell'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000"
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3333"
 
 type Movement = {
   id: number

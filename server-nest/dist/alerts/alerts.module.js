@@ -12,7 +12,6 @@ const alerts_service_1 = require("./alerts.service");
 const alerts_controller_1 = require("./alerts.controller");
 const notifications_controller_1 = require("../notifications/notifications.controller");
 const prisma_service_1 = require("../prisma.service");
-const schedule_1 = require("@nestjs/schedule");
 const alerts_scheduler_1 = require("./alerts.scheduler");
 const notifications_gateway_1 = require("../notifications/notifications.gateway");
 const auth_module_1 = require("../auth/auth.module");
@@ -21,7 +20,7 @@ let AlertsModule = class AlertsModule {
 exports.AlertsModule = AlertsModule;
 exports.AlertsModule = AlertsModule = __decorate([
     (0, common_1.Module)({
-        imports: [schedule_1.ScheduleModule, auth_module_1.AuthModule],
+        imports: [auth_module_1.AuthModule],
         controllers: [alerts_controller_1.AlertsController, notifications_controller_1.NotificationsController],
         providers: [
             alerts_service_1.AlertsService,

@@ -1,10 +1,19 @@
 import { INestApplication, Injectable, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
+  constructor(private configService: ConfigService) {
+    // Don't throw at construction time — the ConfigModule may not have
+    // populated env values when DI instantiates providers in some setups.
+    // Let PrismaClient read from process.env at runtime and handle
+    // connection retries in onModuleInit instead.
+    super();
+  }
+
   async onModuleInit() {
-    const dbUrl = process.env.DATABASE_URL;
+    const dbUrl = this.configService.get<string>('DATABASE_URL');
 
     if (
       !dbUrl ||
@@ -16,18 +25,27 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
       return;
     }
 
-    try {
-      await this.$connect();
-    } catch (err: unknown) {
-      // Don't crash the whole app for a DB connection issue during bootstrap.
-      // Log the error with a helpful message.
-      try {
-        const message = (err as { message?: string })?.message ?? String(err);
-        console.warn('Prisma failed to connect during onModuleInit:', message);
-      } catch {
-        // ignore
+      let retries = 5;
+      const retryDelay = 5000; // 5 seconds
+
+      while (retries > 0) {
+        try {
+          await this.$connect();
+          console.log('Successfully connected to database');
+          return;
+        } catch (err) {
+          retries--;
+          console.log(`Failed to connect to database. Retries left: ${retries}`);
+          console.error('Connection error:', err);
+
+          if (retries === 0) {
+            console.error('Max retries reached. Could not connect to database.');
+            throw err;
+          }
+
+          await new Promise(resolve => setTimeout(resolve, retryDelay));
+        }
       }
-    }
   }
 
   enableShutdownHooks(app: INestApplication) {

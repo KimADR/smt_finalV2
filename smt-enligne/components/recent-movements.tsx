@@ -29,7 +29,7 @@ export function RecentMovements({ period, selectedEnterprise }: { period: string
   const displayed = movements.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)
 
   useEffect(() => {
-    const api = process.env.NEXT_PUBLIC_API_BASE || process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"
+    const api = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333"
     setLoading(true)
     const params = new URLSearchParams({ period })
     // apply entreprise filter when provided

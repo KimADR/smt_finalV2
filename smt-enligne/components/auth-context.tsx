@@ -106,7 +106,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }
     user,
     role: user?.role ?? null,
   login: async (username: string, password: string) => {
-      const base = (typeof process !== 'undefined' && (process as any)?.env?.NEXT_PUBLIC_API_BASE) || 'http://localhost:4000'
+      const base = (typeof process !== 'undefined' && (process as any)?.env?.NEXT_PUBLIC_API_URL) || 'http://localhost:3333'
       const res = await fetch(`${base.replace(/\/$/, '')}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

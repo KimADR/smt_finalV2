@@ -10,7 +10,6 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const prisma_service_1 = require("./prisma.service");
-const schedule_1 = require("@nestjs/schedule");
 const alerts_module_1 = require("./alerts/alerts.module");
 const debug_controller_1 = require("./notifications/debug.controller");
 const entreprises_module_1 = require("./entreprises/entreprises.module");
@@ -36,7 +35,6 @@ exports.AppModule = AppModule = __decorate([
             analytics_module_1.AnalyticsModule,
             reports_module_1.ReportsModule,
             auth_module_1.AuthModule,
-            schedule_1.ScheduleModule.forRoot(),
             alerts_module_1.AlertsModule,
         ],
         controllers: [...devControllers],
