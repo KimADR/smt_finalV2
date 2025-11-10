@@ -18,7 +18,7 @@ export default function AlertDetail({ params }: any) {
   const { toast } = useToast()
 
   useEffect(() => {
-    const api = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
+    const api = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333'
     setLoading(true)
     authFetch(`${api}/api/alerts/${id}` as any)
       .then(r => { if (!r.ok) throw new Error(String(r.status)); return r.json() })
@@ -29,7 +29,7 @@ export default function AlertDetail({ params }: any) {
 
   async function resolveAlert() {
     try {
-      const api = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
+      const api = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333'
       const res = await authFetch(`${api}/api/alerts/${id}/resolve` as any, { method: 'PATCH' } as any)
   if (!res.ok) throw new Error(String(res.status))
       try { (await import('@/hooks/use-toast')).showOperationSuccessToast('resolve', 'l\'alerte') } catch (e) { toast({ title: 'Alerte résolue', description: 'L\'alerte a été marquée comme résolue.', variant: 'success' }) }
@@ -62,7 +62,7 @@ export default function AlertDetail({ params }: any) {
   Swal.close()
 
   try {
-      const api = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
+      const api = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333'
       const res = await authFetch(`${api}/api/alerts/${id}` as any, { method: 'DELETE' } as any)
   if (!res.ok) throw new Error(String(res.status))
       try { (await import('@/hooks/use-toast')).showOperationSuccessToast('delete', 'l\'alerte') } catch (e) { toast({ title: 'Alerte supprimée', description: 'L\'alerte a été supprimée avec succès.', variant: 'success' }) }

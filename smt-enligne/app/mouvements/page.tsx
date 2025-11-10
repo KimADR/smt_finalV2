@@ -271,7 +271,7 @@ export default function MouvementsPage() {
 
   // fetch enterprises for the filter select
   useEffect(() => {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000"
+    const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3333"
     authFetch(`${API_URL}/api/entreprises`)
       .then((r) => (r.ok ? r.json() : []))
       .then((list: any[]) => {
@@ -442,7 +442,7 @@ export default function MouvementsPage() {
   }
 
   const handleDelete = async (id: number) => {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000"
+    const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3333"
     // optimistic remove
     const prev = movements
     setMovements((p) => p.filter((it) => it.id !== id))

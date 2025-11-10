@@ -16,17 +16,7 @@ const config_1 = require("@nestjs/config");
 let PrismaService = class PrismaService extends client_1.PrismaClient {
     configService;
     constructor(configService) {
-        const dbUrl = configService.get('DATABASE_URL');
-        if (!dbUrl) {
-            throw new Error('DATABASE_URL environment variable is not set');
-        }
-        super({
-            datasources: {
-                db: {
-                    url: dbUrl,
-                },
-            },
-        });
+        super();
         this.configService = configService;
     }
     async onModuleInit() {

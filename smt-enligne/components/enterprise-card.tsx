@@ -69,7 +69,7 @@ export function EnterpriseCard({ enterprise, onEdit, onDelete }: EnterpriseCardP
     let mounted = true
     async function loadAssignedUser() {
       try {
-        const api = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
+        const api = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333'
         const res = await authFetch(`${api}/api/users?entrepriseId=${enterprise.id}` as any)
         if (!res.ok) return
   const data = await res.json()

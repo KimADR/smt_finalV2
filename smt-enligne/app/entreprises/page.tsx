@@ -30,7 +30,7 @@ import { authFetch } from "@/lib/utils"
 import { TaxAlerts } from '@/components/tax-alerts'
 import EnterpriseMap from '@/components/enterprise-map'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000"
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3333"
 
 // Small inline animated counter used in the enterprise card
 function AnimatedCounter({ value }: { value: number }) {

@@ -116,7 +116,7 @@ export function EnterpriseForm({ open, onOpenChange, initialData, onSaved }: Ent
   // fetch users (to populate dropdown)
   const fetchUsers = async () => {
     setLoadingUsers(true)
-    const api = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"
+    const api = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333"
     try {
       const res = await authFetch(`${api}/api/users` as any)
       if (!res.ok) throw new Error(await res.text())
@@ -207,7 +207,7 @@ export function EnterpriseForm({ open, onOpenChange, initialData, onSaved }: Ent
     }
 
     // Submit form to backend (create or update)
-    const api = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"
+    const api = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333"
   const payload = {
   name: formData.name,
   siret: formData.nif,
@@ -367,7 +367,7 @@ export function EnterpriseForm({ open, onOpenChange, initialData, onSaved }: Ent
     const confirmed = window.confirm('Confirmer la suppression de cette entreprise ?')
     if (!confirmed) return
 
-    const api = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"
+    const api = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333"
     const url = `${api}/api/entreprises/${initialData.id}`
     // optimistic remove
     if (onSaved) onSaved({ id: initialData.id }, 'deleteOptimistic', { prev: initialData })
@@ -391,7 +391,7 @@ export function EnterpriseForm({ open, onOpenChange, initialData, onSaved }: Ent
 
   // assign (or clear) a user's entrepriseId
   async function assignUserToEntreprise(userId: number, entrepriseId: number | null) {
-    const api = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"
+    const api = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333"
     try {
       const res = await authFetch(`${api}/api/users/${userId}` as any, {
         method: 'PUT',

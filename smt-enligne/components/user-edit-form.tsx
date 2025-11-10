@@ -31,7 +31,7 @@ export default function UserEditForm({ userId, onClose, onUpdated }: Props) {
   useEffect(() => {
     let mounted = true
     setLoading(true)
-    const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000')
+    const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3333')
     authFetch(`${API_URL}/api/users/${userId}` as any)
       .then(async (r) => { if (!r.ok) throw new Error(await r.text()); return r.json() })
       .then((data) => {
@@ -112,7 +112,7 @@ export default function UserEditForm({ userId, onClose, onUpdated }: Props) {
   function handleSubmit(e: any) {
     e.preventDefault()
     setLoading(true)
-    const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000')
+    const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3333')
     const payload = {
       username: form.username,
       email: form.email,

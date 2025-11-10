@@ -21,7 +21,7 @@ let AuthController = class AuthController {
         this.auth = auth;
     }
     login(body) {
-        const usernameOrEmail = String(body?.username ?? '');
+        const usernameOrEmail = String(body?.email ?? body?.username ?? '');
         const password = String(body?.password ?? '');
         return this.auth.login(usernameOrEmail, password);
     }

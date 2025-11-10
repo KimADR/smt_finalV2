@@ -116,7 +116,7 @@ export function TaxAlerts({ period, selectedEnterprise }: { period: string; sele
   function refresh() {
     setLoading(true)
     setError(null)
-    const api = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:4000"
+  const api = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333"
     const params = new URLSearchParams()
     if (selectedEnterprise && selectedEnterprise !== 'all') params.set('entrepriseId', String(selectedEnterprise))
     authFetch(`${api}/api/alerts${params.toString() ? `?${params.toString()}` : ''}` as any)
@@ -249,7 +249,7 @@ export function TaxAlerts({ period, selectedEnterprise }: { period: string; sele
     try {
       const missing = arr.filter(a => a.mouvement && !getMouvementDate(a.mouvement))
       if (missing.length === 0) return
-      const api = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:4000"
+    const api = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333"
       // fetch in parallel limited to 6 at a time
       const fetches = missing.map(async (a) => {
         const mid = (a.mouvement as any).id
@@ -487,7 +487,7 @@ export function TaxAlerts({ period, selectedEnterprise }: { period: string; sele
                   // give the dropdown a moment to close and clear focus so subsequent modals receive clicks
                   await new Promise((res) => setTimeout(res, 220))
                   try { (document.activeElement as HTMLElement | null)?.blur() } catch (er) { /* noop */ }
-                  const api = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:4000'
+                  const api = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333'
                   try {
                     const r = await authFetch(`${api}/api/alerts/${alert.id}/resolve` as any, { method: 'PATCH' } as any)
                     if (!r.ok) throw new Error(`HTTP ${r.status}`)
@@ -518,7 +518,7 @@ export function TaxAlerts({ period, selectedEnterprise }: { period: string; sele
                   // Close the modal immediately so it disappears on first click
                   if (!res.isConfirmed) { Swal.close(); return }
                   // Swal.close()
-                  const api = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:4000'
+                  const api = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333'
                   const prev = alerts
                   setAlerts((prevList) => prevList.filter((a) => a.id !== alert.id))
                   try {

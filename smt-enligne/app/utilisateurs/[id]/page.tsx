@@ -35,7 +35,7 @@ export default function UserProfile({ params }: any) {
   useEffect(() => {
     let mounted = true
     setLoading(true)
-    authFetch(`${process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000'}/api/users/${id}` as any)
+    authFetch(`${process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3333'}/api/users/${id}` as any)
       .then(async (r) => {
         if (!r.ok) throw new Error(await r.text())
         return r.json()

@@ -51,7 +51,7 @@ export default function DashboardPage() {
   const [growthPercent, setGrowthPercent] = useState(null as number | null)
   const [taxesDue, setTaxesDue] = useState<number | null>(null)
   const [urgentAlertsTotal, setUrgentAlertsTotal] = useState<number | null>(null)
-  const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000"
+  const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3333"
   const [period, setPeriod] = useState('year') // week | month | quarter | year
   const [selectedEnterprise, setSelectedEnterprise] = useState<string>('all') // 'all' ou ID de l'entreprise
   const [enterprises, setEnterprises] = useState<Array<{ id: number; name: string }>>([])
