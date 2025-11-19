@@ -10,6 +10,8 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Calculator, DollarSign, FileText, Download } from "lucide-react"
 import ReportModal from "@/components/report-modal"
+import { generateTaxReportPDF } from "@/lib/pdf-generator"
+import { getMadagascarLogoDataUrl } from "@/lib/logo-data"
 
 interface TaxCalculatorProps {
   open: boolean
@@ -138,7 +140,6 @@ export function TaxCalculator({ open, onOpenChange, enterprise }: TaxCalculatorP
                 <div className="space-y-2">
                   <Label htmlFor="revenue">Chiffre d'affaires annuel (MGA)</Label>
                   <div className="relative">
-                    <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
                       id="revenue"
                       type="number"
@@ -155,7 +156,6 @@ export function TaxCalculator({ open, onOpenChange, enterprise }: TaxCalculatorP
                 <div className="space-y-2">
                   <Label htmlFor="expenses">Charges déductibles (MGA)</Label>
                   <div className="relative">
-                    <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
                       id="expenses"
                       type="number"
@@ -172,8 +172,7 @@ export function TaxCalculator({ open, onOpenChange, enterprise }: TaxCalculatorP
                 <div className="space-y-2">
                   <Label htmlFor="previousPayments">Acomptes déjà versés (MGA)</Label>
                   <div className="relative">
-                    <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input
+                     <Input
                       id="previousPayments"
                       type="number"
                       value={previousTaxPayments}
@@ -313,18 +312,9 @@ export function TaxCalculator({ open, onOpenChange, enterprise }: TaxCalculatorP
           </Button>
 
           <div className="flex gap-2">
-            <Button variant="outline" onClick={() => {
-              // direct JSON download (unchanged behavior)
-              const report = { enterprise: enterprise || null, calculation: taxCalculation, generatedAt: new Date().toISOString() }
-              const blob = new Blob([JSON.stringify(report, null, 2)], { type: "application/json" })
-              const url = URL.createObjectURL(blob)
-              const a = document.createElement("a")
-              a.href = url
-              a.download = `${(enterprise?.name || "enterprise").replace(/\s+/g, "_")}-tax-report.json`
-              document.body.appendChild(a)
-              a.click()
-              a.remove()
-              URL.revokeObjectURL(url)
+            <Button variant="outline" onClick={async () => {
+              const logoDataUrl = await getMadagascarLogoDataUrl()
+              generateTaxReportPDF(enterprise, taxCalculation, revenue, expenses, previousTaxPayments, { logoDataUrl })
             }}>
               <Download className="h-4 w-4 mr-2" />
               Télécharger

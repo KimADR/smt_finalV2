@@ -311,7 +311,7 @@ export default function DashboardPage() {
       })
 
     return () => { mounted = false; try { offAlert && offAlert(); offMvt && offMvt() } catch {} }
-  }, [period, role, selectedEnterprise, (user as any)?.entrepriseId, (user as any)?.entreprise?.id])
+  }, [period, role, selectedEnterprise, (user as any)?.entrepriseId, (user as any)?.entreprise?.id, ready, user, token])
 
   return (
     <div className="min-h-screen flex bg-background">

@@ -19,7 +19,6 @@ type MouvementListItem = {
   reference: string | null;
   estPaiementImpot: boolean | null;
   attachments: Prisma.InputJsonValue | null;
-  // Use ISO string for canonical timestamp shape returned by API
   createdAt: string;
   entrepriseId: number;
   userId: number | null;
@@ -34,7 +33,6 @@ export class MouvementsService {
     private readonly alertsService: AlertsService,
   ) {}
 
-  // Normalize Decimal/string/number to JS number with 2 decimals
   private normalizeAmount(value: unknown): number {
     if (value === null || value === undefined) return 0;
     if (typeof value === 'number') return Number(Number(value).toFixed(2));

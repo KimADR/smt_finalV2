@@ -41,3 +41,4 @@ dist/
 # server nest artifacts
 server-nest/dist/
 server-nest/node_modules/
+.vercel
